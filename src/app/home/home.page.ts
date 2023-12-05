@@ -8,8 +8,10 @@ import { ApiService } from '../ApiService/api.service';
 })
 export class HomePage {
   products: any = [];
+  image: any;
   constructor(private api: ApiService) {
     this.showdata();
+    this.postData();
   }
 
   showdata() {
@@ -25,10 +27,17 @@ export class HomePage {
     );
   }
 
-  postdata() {
-    let data = 'My name is vidur';
-    this.api.postApiData(data).subscribe((res: any) => {
-      console.log('post', res.data);
-    });
+  postData() {
+    const data = this.products;
+    console.log('data', data);
+
+    this.api.postApiData(data).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+      },
+      (error: any) => {
+        console.error('API Error:', error);
+      }
+    );
   }
 }

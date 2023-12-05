@@ -7,6 +7,10 @@
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let productData of products">
     <ion-row>
+      <img src="{{productData.images.slice(1,2)}}" />
+    </ion-row>
+
+    <ion-row>
       <ion-col>Title:{{productData.title}}</ion-col>
     </ion-row>
 
