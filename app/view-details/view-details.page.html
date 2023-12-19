@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>viewDetails</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card color="light">
+    <ion-row>
+      <ion-col style="font-size: 20px; font-family: 'Arial'"
+        >First Name</ion-col
+      >
+      <ion-col
+        style="font-size: medium; font-family: cursive; color: darkgoldenrod"
+        >{{result.firstname}}</ion-col
+      >
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: 20px; font-family: 'Arial'">Last Name</ion-col>
+      <ion-col
+        style="font-size: medium; font-family: cursive; color: darkgoldenrod"
+        >{{result.lastname}}</ion-col
+      >
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: 20px; font-family: 'Arial'">Email</ion-col>
+      <ion-col
+        style="font-size: medium; font-family: cursive; color: darkgoldenrod"
+        >{{result.email}}</ion-col
+      >
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: 20px; font-family: 'Arial'">Address</ion-col>
+      <ion-col
+        style="font-size: medium; font-family: cursive; color: darkgoldenrod"
+        >{{result.address}}</ion-col
+      >
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: 20px; font-family: 'Arial'">Contact</ion-col>
+      <ion-col
+        style="font-size: medium; font-family: cursive; color: darkgoldenrod"
+        >{{result.contact}}</ion-col
+      >
+    </ion-row>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <div style="display: flex; justify-content: center">
+    <!-- <ion-button click="update(i)">Update Profile</ion-button> -->
+    <ion-button routerLink="/update">Update Profile</ion-button>
+  </div>
+</ion-footer>

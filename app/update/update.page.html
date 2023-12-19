@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>update</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form" (ngSubmit)="onUpdate()">
+    <ion-card>
+      <ion-item lines="none">
+        <ion-label>FirstName:</ion-label>
+        <ion-input type="text" formControlName="firstname"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('firstname')?.hasError('required') && (form.get('firstname')?.dirty||form.get('firstname')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <p
+        *ngIf="form.get('firstname')?.hasError('pattern') && (form.get('firstname')?.dirty||form.get('firstname')?.touched)"
+      >
+        <sup>*</sup>Pattern Is invalid
+      </p>
+      <!-- LastName -->
+      <ion-item lines="none">
+        <ion-label>LastName:</ion-label>
+        <ion-input type="text" formControlName="lastname"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('lastname')?.hasError('required') && (form.get('lastname')?.dirty||form.get('lastname')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <p
+        *ngIf="form.get('lastname')?.hasError('pattern') && (form.get('lastname')?.dirty||form.get('lastname')?.touched)"
+      >
+        <sup>*</sup>Pattern Is invalid
+      </p>
+      <!-- Email -->
+      <ion-item lines="none">
+        <ion-label>Email:</ion-label>
+        <ion-input
+          type="text"
+          formControlName="email"
+          readonly="true"
+        ></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('email')?.hasError('required') && (form.get('email')?.dirty||form.get('email')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <p
+        *ngIf="form.get('email')?.hasError('pattern') && (form.get('email')?.dirty||form.get('email')?.touched)"
+      >
+        <sup>*</sup>Pattern Is invalid
+      </p>
+      <!-- Address -->
+      <ion-item lines="none">
+        <ion-label>Address:</ion-label>
+        <ion-input type="text" formControlName="address"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('address')?.hasError('required') && (form.get('address')?.dirty||form.get('address')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <!-- Contact -->
+      <ion-item lines="none">
+        <ion-label>Contact:</ion-label>
+        <ion-input type="text" formControlName="contact"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('contact')?.hasError('required') && (form.get('contact')?.dirty||form.get('contact')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <p
+        *ngIf="form.get('contact')?.hasError('pattern') && (form.get('contact')?.dirty||form.get('contact')?.touched)"
+      >
+        <sup>*</sup>Pattern Is invalid
+      </p>
+      <p
+        *ngIf="form.get('contact')?.hasError('minlength') && (form.get('contact')?.dirty||form.get('contact')?.touched)"
+      >
+        <sup>*</sup>contact should be upto 5 digits
+      </p>
+      <p
+        *ngIf="form.get('contact')?.hasError('maxlength') && (form.get('contact')?.dirty||form.get('contact')?.touched)"
+      >
+        <sup>*</sup>contactt should not more than 5 digits
+      </p>
+
+      <!-- Buttons Code -->
+      <div style="display: flex; justify-content: center">
+        <ion-button
+          type="submit"
+          [disabled]="form.invalid"
+          class="ion-text-center"
+          >Update</ion-button
+        >
+      </div>
+    </ion-card>
+  </form>
+</ion-content>

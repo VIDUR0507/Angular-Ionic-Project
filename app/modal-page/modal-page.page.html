@@ -1,0 +1,110 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>modalPage</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel() ">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [strong]="true" (click)="confirm(modalForm.value)"
+        >Confirm</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label position="stacked">Your name</ion-label>
+    <ion-input [(ngModel)]="name" placeholder="Your name"></ion-input>
+  </ion-item>
+  <!-- <form [formGroup]="modalForm">
+    <ion-card>
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Your name"
+          formControlName="name"
+        ></ion-input>
+      </ion-item>
+      <p
+        *ngIf="modalForm.get('name')?.hasError('required') && (modalForm.get('name')?.dirty || modalForm.get('name')?.touched)"
+        style="color: red"
+      >
+        <sup>*</sup>
+        Field is required
+      </p>
+      <p
+        *ngIf="modalForm.get('name')?.hasError('minlength') && (modalForm.get('course')?.dirty || modalForm.get('course')?.touched)"
+        style="color: red"
+      >
+        <sup>*</sup>
+        name should be more than 3 characters
+      </p>
+      <p
+        *ngIf="modalForm.get('name')?.hasError('maxlength') && (modalForm.get('course')?.dirty || modalForm.get('course')?.touched)"
+        style="color: red"
+      >
+        <sup>*</sup>
+        name should be less than 10 characters
+      </p>
+
+      <ion-item>
+        <ion-label position="stacked">Address</ion-label>
+        <ion-input
+          type="text"
+          placeholder="123/@street"
+          formControlName="address"
+        ></ion-input>
+      </ion-item>
+      <p
+        *ngIf="modalForm.get('address')?.hasError('required') && (modalForm.get('address')?.dirty || modalForm.get('address')?.touched)"
+        style="color: red"
+      >
+        <sup>*</sup>
+        Field is required
+      </p>
+
+      <ion-item>
+        <ion-label position="stacked">Course</ion-label>
+        <ion-select
+          placeholder="Select Course"
+          interface="popover"
+          formControlName="course"
+        >
+          <ion-select-option value="MCA">MCA</ion-select-option>
+          <ion-select-option value="BCA">BCA</ion-select-option>
+          <ion-select-option value="Btech">Btech</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <p
+        *ngIf="modalForm.get('course')?.hasError('required') && (modalForm.get('course')?.dirty || modalForm.get('course')?.touched)"
+        style="color: red"
+      >
+        <sup>*</sup>
+        Field is required
+      </p>
+
+      <ion-item>
+        <ion-label position="stacked">City</ion-label>
+        <ion-input
+          type="text"
+          placeholder="your city"
+          formControlName="city"
+        ></ion-input>
+      </ion-item>
+      <p
+        *ngIf="modalForm.get('city')?.hasError('required') && (modalForm.get('city')?.dirty || modalForm.get('city')?.touched)"
+        style="color: red"
+      >
+        <sup>*</sup>
+        Field is required
+      </p>
+      <div>
+        <ion-button [disabled]="modalForm.invalid" type="submit"
+          >Submit
+        </ion-button>
+      </div> 
+    </ion-card>
+  </form> -->
+</ion-content>

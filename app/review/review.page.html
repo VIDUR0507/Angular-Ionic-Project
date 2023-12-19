@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>review</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form" (ngSubmit)="Submit(form.value)">
+    <ion-card>
+      <ion-row>
+        <ion-label style="font-size: x-large; color: black">
+          Write a review
+        </ion-label>
+
+        <ion-textarea
+          class="custom-textarea"
+          type="text"
+          formControlName="comment"
+        ></ion-textarea>
+      </ion-row>
+
+      <div style="display: flex; justify-content: center">
+        <ion-button color="success" type="submit">Submit</ion-button>
+      </div>
+    </ion-card>
+  </form>
+</ion-content>

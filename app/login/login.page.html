@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form">
+    <ion-card>
+      <div style="display: flex; justify-content: center">
+        <ion-text color="tertiary">
+          <h1>LOGIN</h1>
+        </ion-text>
+      </div>
+
+      <ion-item lines="none">
+        <ion-label style="font-size: 20px; font-family: 'Arial'"
+          >Email:</ion-label
+        >
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('email')?.hasError('required') && (form.get('email')?.dirty||form.get('email')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <p
+        *ngIf="form.get('email')?.hasError('pattern') && (form.get('email')?.dirty||form.get('email')?.touched)"
+      >
+        <sup>*</sup>Pattern Is invalid
+      </p>
+      <!-- Password -->
+      <ion-item lines="none">
+        <ion-label style="font-size: 20px; font-family: 'Arial'"
+          >Password:</ion-label
+        >
+        <ion-input type="text" formControlName="password"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('password')?.hasError('required') && (form.get('password')?.dirty||form.get('password')?.touched)"
+      >
+        <sup>*</sup>Field is required
+      </p>
+      <div style="display: flex; justify-content: center">
+        <ion-button
+          (click)="login()"
+          [disabled]="form.invalid"
+          shape="round"
+          color="success"
+          >Login</ion-button
+        >
+      </div>
+    </ion-card>
+  </form>
+
+  <ion-card>
+    <div style="display: flex; justify-content: center">
+      <ion-button fill="clear" color="danger" routerLink="/password"
+        >Forgot Password</ion-button
+      >
+    </div>
+
+    <div style="display: flex; justify-content: center">
+      <ion-button routerLink="/signup" fill="clear">Create Account</ion-button>
+    </div>
+
+    <!-- <div style="display: flex; justify-content: center">
+      <ion-button fill="clear" (click)="showAlert()">Show Alert</ion-button>
+    </div> -->
+  </ion-card>
+</ion-content>

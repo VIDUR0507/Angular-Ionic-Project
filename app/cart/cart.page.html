@@ -1,0 +1,172 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>cart</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+      <!-- <ion-back-button routerLink="/home"></ion-back-button> -->
+    </ion-buttons>
+    <ion-badge slot="end" color="dark">
+      <ion-icon name="cart" color="danger" size="large"></ion-icon>
+      {{count}}
+    </ion-badge>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let cartData of sameEmailProducts; ">
+    <ion-row>
+      <ion-img src="{{cartData.image}}"></ion-img>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: large; color: teal">Title</ion-col>
+      <ion-col>{{cartData.title}}</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: large; color: teal">Description</ion-col>
+      <ion-col>{{cartData.description}}</ion-col>
+    </ion-row>
+
+    <!-- Quantity -->
+    <ion-row>
+      <ion-col size="4" style="font-size: large; color: teal">Quantity</ion-col>
+      <ion-col size="2">
+        <ion-button
+          (click)="updateQuantity(cartData, 'minus');"
+          size="small"
+          color="dark"
+        >
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-input
+          type="text"
+          [(ngModel)]="cartData.quantityValue"
+          readonly="true"
+          style="text-align: center"
+        ></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button
+          (click)="updateQuantity(cartData, 'plus')"
+          size="small"
+          color="dark"
+        >
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Note: slice(startingIndex,endingIndex) -->
+    <!-- Fetch only 0th index of pricing array -->
+    <ion-row *ngFor="let p of cartData.pricing.slice(0, 1)">
+      <ion-col style="font-size: large; color: teal">Price</ion-col>
+      <ion-col>
+        <ion-input type="text" readonly="true">
+          {{p.price * cartData.quantityValue|currency:'CAD':'symbol-narrow'}}
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-item>
+      <ion-button size="medium" (click)="counter('like')">
+        <ion-icon name="thumbs-up-outline"></ion-icon>
+        {{like}}
+      </ion-button>
+      <ion-button size="medium" (click)="counter('dislike')">
+        <ion-icon name="thumbs-down-outline"></ion-icon>
+        {{dislike}}
+      </ion-button>
+    </ion-item>
+
+    <ion-button (click)="toggleLike()" [color]="isLiked ? 'danger' : 'primary'">
+      {{ isLiked ? 'Unlike' : 'Like' }}
+    </ion-button>
+    <p>Total Likes: {{ totalLikes }}</p>
+
+    <!-- Button Code -->
+    <div style="display: flex; justify-content: center">
+      <ion-button (click)="alertbutton(cartData)" fill="outline" color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="outline" color="success" (click)="updateCart(cartData)">
+        <ion-icon name="checkmark-circle"> </ion-icon>
+        Update
+      </ion-button>
+    </div>
+    <ion-button
+      expand="block"
+      color="dark"
+      size="small"
+      style="
+        color: black;
+        font-size: large;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: bold;
+      "
+      (click)="sendProductData(cartData)"
+    >
+      Review Product
+    </ion-button>
+  </ion-card>
+
+  <!-- <ng-container *ngIf="sameEmailProducts.length > 0">
+    <ion-footer>
+      <ion-toolbar>
+        <ion-item>
+          <ion-button (click)="totalProductPrice()" size="medium"
+            >Total Price:</ion-button
+          >
+          <ion-label style="font-size: large">
+            {{ totalPrice | currency: 'CAD': 'symbol-narrow' }}
+          </ion-label>
+          <ion-button (click)="checkout()" size="medium" color="tertiary">
+            Checkout
+          </ion-button>
+        </ion-item>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-container> -->
+
+  <ion-card *ngIf="sameEmailProducts.length === 0">
+    <img
+      src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"
+    />
+    <h1
+      style="
+        font-family: cursive;
+        display: flex;
+        justify-content: center;
+        color: black;
+      "
+    >
+      Cart Is Empty
+    </h1>
+    <div style="display: flex; justify-content: center">
+      <ion-button routerLink="/home" color="success">
+        Continue Shopping
+      </ion-button>
+    </div>
+  </ion-card>
+</ion-content>
+
+<ng-container *ngIf="sameEmailProducts.length > 0">
+  <ion-footer>
+    <ion-toolbar>
+      <ion-item>
+        <ion-button (click)="totalProductPrice()" size="medium"
+          >Total Price:</ion-button
+        >
+        <ion-label style="font-size: large">
+          {{ totalPrice | currency: 'CAD': 'symbol-narrow' }}
+        </ion-label>
+        <ion-button (click)="checkout()" size="medium" color="tertiary">
+          Checkout
+        </ion-button>
+      </ion-item>
+    </ion-toolbar>
+  </ion-footer>
+</ng-container>

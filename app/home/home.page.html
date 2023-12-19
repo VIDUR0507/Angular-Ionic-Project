@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Home </ion-title>
+    <ion-badge slot="start" routerLink="/cart" color="dark">
+      <ion-icon name="cart" color="success" size="large"></ion-icon>
+      {{countCartItems}}
+    </ion-badge>
+
+    <div style="display: flex; justify-content: end">
+      <ion-button (click)="openModal()" size="small">Modal</ion-button>
+    </div>
+
+    <ion-menu-button slot="end">
+      <ion-icon
+        size="large"
+        name="menu-outline"
+        (click)="togglemenu()"
+      ></ion-icon>
+    </ion-menu-button>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar
+      color="light"
+      [debounce]="1000"
+      (keyup)="handlesearchBar($event)"
+      placeholder="search by title"
+    >
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <p>{{ msg }}</p>
+  <!-- <ion-card *ngFor="let msg of msg">
+    <p>{{msg.name}}</p>
+    <p>{{msg.address}}</p>
+    <p>{{msg.course}}</p>
+    <p>{{msg.city}}</p>
+  </ion-card> -->
+
+  <ion-reorder-group
+    [disabled]="false"
+    (ionItemReorder)="handleReorder($any($event))"
+  >
+    <ion-refresher
+      slot="fixed"
+      [pullFactor]="0.5"
+      [pullMin]="100"
+      [pullMax]="200"
+      (ionRefresh)="handleRefresh($event)"
+    >
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-card
+      *ngFor="let ProductData of  (isFilterActive ? filterItem : productDetails)"
+      (click)="sendProductData(ProductData)"
+    >
+      <ion-row>
+        <ion-col
+          size="9"
+          style="font-family: cursive; color: black; font-size: large"
+        >
+          Title: {{ProductData.title}}
+        </ion-col>
+        <ion-col size="2">
+          <ion-reorder>
+            <ion-icon name="chevron-down-circle"></ion-icon>
+          </ion-reorder>
+        </ion-col>
+
+        <ion-col size="1" *ngIf="ProductData.email===loginmail">
+          <ion-icon
+            name="ellipsis-vertical"
+            (click)="ActionSheet(ProductData,$event)"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col style="font-family: cursive; color: black; font-size: large"
+          >Description: {{ProductData.description}}
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-reorder-group>
+</ion-content>

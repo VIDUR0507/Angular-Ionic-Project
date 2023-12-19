@@ -1,0 +1,79 @@
+<ion-app>
+  <ion-menu contentId="main-content" side="end">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>DashBoard</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-menu-toggle>
+            <ion-button
+              routerLink="/add-product"
+              fill="outline"
+              style="color: black"
+              size="medium"
+            >
+              <ion-icon name="bag-add-sharp"></ion-icon> &nbsp;Add Product
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-menu-toggle>
+            <ion-button
+              routerLink="/user-product-view"
+              fill="outline"
+              style="color: black"
+              size="medium"
+            >
+              <ion-icon name="list-circle-sharp"></ion-icon> &nbsp;My Product
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-menu-toggle>
+            <ion-button
+              routerLink="/view-details"
+              fill="outline"
+              style="color: black"
+              size="medium"
+            >
+              <ion-icon name="person-sharp"></ion-icon> &nbsp;My Profile
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-menu-toggle>
+            <ion-button
+              routerLink="/cart"
+              fill="outline"
+              style="color: black"
+              size="medium"
+            >
+              <ion-icon name="cart"></ion-icon> &nbsp;My-Cart
+              {{ countCartItems }}
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-menu-toggle>
+            <ion-button
+              (click)="logout()"
+              fill="outline"
+              color="danger"
+              style="color: rgb(226, 25, 25)"
+              size="medium"
+              >Logout</ion-button
+            >
+          </ion-menu-toggle>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-app>

@@ -1,0 +1,514 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>EditProduct</ion-title>
+    <ion-buttons>
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form" (ngSubmit)="onUpdate()">
+    <ion-card>
+      <!-- Product Image -->
+      <ion-item lines="none">
+        <img src="{{imageUrl}}" />
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="file" (change)="setimage($event)"> </ion-input>
+      </ion-item>
+
+      <!-- Title -->
+      <ion-item lines="none">
+        <ion-label>Title:</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('title')?.hasError('required') && (form.get('title')?.dirty || form.get('title')?.touched)"
+      >
+        <sup>*</sup>This field is required.
+      </p>
+
+      <!-- Description Code -->
+      <ion-item lines="none">
+        <ion-label>Description:</ion-label>
+        <ion-input type="text" formControlName="description"></ion-input>
+      </ion-item>
+      <p
+        *ngIf="form.get('description')?.hasError('required') && (form.get('description')?.dirty || form.get('description')?.touched)"
+      >
+        <sup>*</sup>This field is required.
+      </p>
+
+      <!-- FormArray Code -->
+      <ion-card formArrayName="pricing">
+        <ion-row
+          *ngFor="let p of priceControls;  let formArrayID = index;"
+          [formGroupName]="formArrayID"
+        >
+          <ion-col size="4.5" style="font-size: large"
+            >Price Type
+            <ion-select placeholder="Type" formControlName="pricetype">
+              <ion-select-option value="Hourly">Hourly</ion-select-option>
+              <ion-select-option value="Daily">Daily</ion-select-option>
+              <ion-select-option value="Weekly">Weekly</ion-select-option>
+              <ion-select-option value="Monthly">Monthly</ion-select-option>
+            </ion-select>
+            <p
+              *ngIf="p.get('pricetype')?.hasError('required') && (p.get('pricetype')?.dirty || p.get('pricetype')?.touched)"
+              style="font-size: small"
+            >
+              <sup>*</sup>This field is required.
+            </p>
+          </ion-col>
+
+          <ion-col size="4.5" style="font-size: large"
+            >Price
+            <ion-input
+              type="text"
+              placeholder="Enter Price"
+              formControlName="price"
+            ></ion-input>
+            <p
+              *ngIf="p.get('price')?.hasError('required') && (p.get('price')?.dirty || p.get('price')?.touched)"
+              style="font-size: small"
+            >
+              <sup>*</sup>This field is required.
+            </p>
+          </ion-col>
+
+          <ion-col size="3">
+            <ng-container *ngIf="formArrayID > 0">
+              <ion-button
+                fill="outline"
+                color="danger"
+                (click)="removeprice(formArrayID)"
+              >
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ng-container>
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-button
+            fill="outline"
+            color="dark"
+            size="medium"
+            (click)="addprice(formArrayID)"
+          >
+            <ion-icon name="add-circle"></ion-icon>Add Price
+          </ion-button>
+        </ion-item>
+      </ion-card>
+
+      <!-- Product Availability -->
+      <ion-item lines="none">
+        <ion-label>Product Availability:</ion-label>
+      </ion-item>
+      <!-- Monday -->
+      <ion-list>
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+          >
+            Mon
+            <ion-toggle
+              formControlName="monday"
+              (ionChange)="toggleChanged($event,'monday')"
+            ></ion-toggle>
+          </ion-col>
+
+          <ng-container *ngIf="form.value.monday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input3">
+                <ion-text>{{timevalue3}}</ion-text>
+                <ion-popover trigger="open-date-input3" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue3=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input4">
+                <ion-text>{{timevalue4}}</ion-text>
+                <ion-popover trigger="open-date-input4" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue4=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.monday" size="7.5">Closed</ion-col>
+        </ion-row>
+
+        <!-- Tuesday -->
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+          >
+            Tues
+            <ion-toggle
+              formControlName="tuesday"
+              (ionChange)="toggleChanged($event,'tuesday')"
+            ></ion-toggle>
+          </ion-col>
+
+          <ng-container *ngIf="form.value.tuesday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input1">
+                <ion-text>{{timevalue}}</ion-text>
+                <ion-popover trigger="open-date-input1" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input2">
+                <ion-text>{{timevalue2}}</ion-text>
+                <ion-popover trigger="open-date-input2" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue2=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.tuesday" size="7.5">Closed</ion-col>
+        </ion-row>
+
+        <!-- Wednesday -->
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+          >
+            Wed
+            <ion-toggle
+              formControlName="wednesday"
+              (ionChange)="toggleChanged($event,'wednesday')"
+            ></ion-toggle>
+          </ion-col>
+
+          <ng-container *ngIf="form.value.wednesday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input5">
+                <ion-text>{{timevalue5}}</ion-text>
+                <ion-popover trigger="open-date-input5" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue5=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input6">
+                <ion-text>{{timevalue6}}</ion-text>
+                <ion-popover trigger="open-date-input6" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue6=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.wednesday" size="7.5">Closed</ion-col>
+        </ion-row>
+
+        <!-- Thursday -->
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+            >Thur
+            <ion-toggle
+              formControlName="thursday"
+              (ionChange)="toggleChanged($event,'thursday')"
+            ></ion-toggle>
+          </ion-col>
+          <ng-container *ngIf="form.value.thursday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input7">
+                <ion-text>{{timevalue7}}</ion-text>
+                <ion-popover trigger="open-date-input7" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue7=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime
+                  ></ng-template> </ion-popover
+              ></ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input8">
+                <ion-text>{{timevalue8}}</ion-text>
+                <ion-popover trigger="open-date-input8">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue8=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    ></ion-datetime
+                  ></ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.thursday" size="7.5">Closed</ion-col>
+        </ion-row>
+
+        <!-- Friday -->
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+          >
+            Frid
+            <ion-toggle
+              formControlName="friday"
+              (ionChange)="toggleChanged($event,'friday')"
+            ></ion-toggle>
+          </ion-col>
+          <ng-container *ngIf="form.value.friday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input9">
+                <ion-text>{{timevalue9}}</ion-text>
+                <ion-popover trigger="open-date-input9" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue9=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input10">
+                <ion-text>{{timevalue10}}</ion-text>
+                <ion-popover trigger="open-date-input10" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue10=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.friday" size="7.5">Closed</ion-col>
+        </ion-row>
+
+        <!-- Saturday -->
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+          >
+            Satu
+            <ion-toggle
+              formControlName="saturday"
+              (ionChange)="toggleChanged($event,'saturday')"
+            ></ion-toggle>
+          </ion-col>
+          <ng-container *ngIf="form.value.saturday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input11">
+                <ion-text>{{timevalue11}}</ion-text>
+                <ion-popover trigger="open-date-input11" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue11=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input12">
+                <ion-text>{{timevalue12}}</ion-text>
+                <ion-popover trigger="open-date-input12" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue12=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.saturday" size="7.5">Closed</ion-col>
+        </ion-row>
+
+        <!-- Sunday -->
+        <ion-row>
+          <ion-col
+            size="4.5"
+            style="
+              font-size: large;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            "
+          >
+            Sun
+            <ion-toggle
+              formControlName="sunday"
+              (ionChange)="toggleChanged($event,'sunday')"
+            ></ion-toggle>
+          </ion-col>
+          <ng-container *ngIf="form.value.sunday">
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input13">
+                <ion-text>{{timevalue13}}</ion-text>
+                <ion-popover trigger="open-date-input13" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue13=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="1.5">
+              <p>To</p>
+            </ion-col>
+            <ion-col size="3">
+              <ion-item fill="solid" id="open-date-input14">
+                <ion-text>{{timevalue14}}</ion-text>
+                <ion-popover trigger="open-date-input14" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      presentation="time"
+                      #popoverDatetime
+                      (ionChange)="timevalue14=formatTime(popoverDatetime.value)"
+                      [showDefaultButtons]="true"
+                    >
+                    </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+          <ion-col *ngIf="!form.value.sunday" size="7.5">Closed</ion-col>
+        </ion-row>
+      </ion-list>
+
+      <!-- Button code -->
+      <div style="display: flex; justify-content: center">
+        <ion-button
+          type="submit"
+          class="ion-text-center"
+          [disabled]="(form.invalid ||
+          (timevalue3=='select'||timevalue4=='select'||timevalue=='select'||timevalue2=='select'||
+          timevalue5=='select'||timevalue6=='select'||timevalue7=='select'||timevalue8=='select'||
+          timevalue9=='select'||timevalue10=='select'||timevalue11=='select'||timevalue12=='select'||
+          timevalue13=='select'||timevalue14=='select'))"
+          color="success"
+        >
+          Update
+        </ion-button>
+      </div>
+    </ion-card>
+  </form>
+</ion-content>

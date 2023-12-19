@@ -1,0 +1,194 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Products For Cart</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-row>
+      <img src="{{urlValue.image}}" />
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: large; color: teal">Title</ion-col>
+      <ion-col>{{urlValue.title}}</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: large; color: teal">Description</ion-col>
+      <ion-col>{{urlValue.description}}</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="font-size: large; color: teal">Pricing</ion-col>
+    </ion-row>
+
+    <ion-row *ngFor=" let formArray of urlValue.pricing">
+      <ion-col style="color: rgb(16, 17, 17)">Price Type:</ion-col>
+      <ion-col>{{formArray.pricetype}}</ion-col>
+
+      <ion-col style="color: rgb(16, 17, 17)">Price:</ion-col>
+      <ion-col>{{formArray.price}}</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col style="color: teal; font-size: large">Availability:</ion-col>
+    </ion-row>
+
+    <ion-list>
+      <ion-row>
+        <ion-col size="4">Monday:</ion-col>
+        <ng-container *ngIf="urlValue.monday===true">
+          <ion-col size="4">From: {{urlValue.mondayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.mondayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="urlValue.monday==false" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">Tuesday:</ion-col>
+        <ng-container *ngIf="urlValue.tuesday===true">
+          <ion-col size="4">From: {{urlValue.tuesdayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.tuesdayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="urlValue.tuesday==false" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">Wednesday:</ion-col>
+        <ng-container *ngIf="urlValue.wednesday===true">
+          <ion-col size="4">From: {{urlValue.wednesdayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.wednesdayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="!urlValue.wednesday" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">Thursday:</ion-col>
+        <ng-container *ngIf="urlValue.thursday===true">
+          <ion-col size="4">From: {{urlValue.thursdayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.thursdayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="!urlValue.thursday" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">Friday:</ion-col>
+        <ng-container *ngIf="urlValue.friday===true">
+          <ion-col size="4">From: {{urlValue.fridayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.fridayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="!urlValue.friday" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">Saturday:</ion-col>
+        <ng-container *ngIf="urlValue.saturday===true">
+          <ion-col size="4">From: {{urlValue.saturdayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.saturdayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="!urlValue.saturday" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="4">Sunday:</ion-col>
+        <ng-container *ngIf="urlValue.sunday===true">
+          <ion-col size="4">From: {{urlValue.sundayfrom}}</ion-col>
+          <ion-col size="4">To: {{urlValue.sundayto}}</ion-col>
+        </ng-container>
+
+        <ion-col *ngIf="!urlValue.sunday" size="8">
+          <ion-text
+            color="danger"
+            style="text-align: center; display: block; font-size: large"
+          >
+            Closed
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+
+    <ion-card>
+      <ng-container *ngIf="urlValue.email != emailValue">
+        <ion-button
+          fill="solid"
+          color="dark"
+          expand="block"
+          (click)="productcart(urlValue)"
+        >
+          Add to cart
+        </ion-button>
+      </ng-container>
+
+      <ng-container *ngIf="urlValue.email===emailValue">
+        <ion-button
+          fill="solid"
+          color="dark"
+          expand="block"
+          (click)="Update(urlValue)"
+          >Update</ion-button
+        >
+        <!-- <ion-button
+          fill="solid"
+          color="dark"
+          expand="block"
+          (click)="delete(urlValue)"
+        >
+          Delete
+        </ion-button> -->
+      </ng-container>
+    </ion-card>
+  </ion-card>
+</ion-content>
